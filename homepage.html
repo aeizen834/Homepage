@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ari Eizen</title>
+<!-- OPTION 2: "Box Score" — the sports-analytics identity.
+     Football-field backdrop with play routes that draw themselves,
+     plus a scouting-card for you with a stat line. -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --turf: #0f3d2e;
+    --turf-dark: #0a2b20;
+    --chalk: #f4f1e8;
+    --accent: #ffb000;
+    --red: #e4572e;
+    --muted: #a7c4b5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--turf-dark); color: var(--chalk); font-family: 'Inter', sans-serif; }
+
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 4rem 8vw;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), rgba(244,241,232,.08) calc(10% - 2px) 10%),
+      linear-gradient(180deg, var(--turf) 0%, var(--turf-dark) 100%);
+  }
+
+  /* play diagram behind everything */
+  svg.plays { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .35; pointer-events: none; }
+  .route { fill: none; stroke: var(--chalk); stroke-width: 3; stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+  .route.alt { stroke: var(--accent); }
+  .draw { animation: draw 2.2s ease-out forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .x, .o { fill: none; stroke: var(--chalk); stroke-width: 3; }
+
+  .copy { position: relative; max-width: 560px; }
+  .kicker {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase; letter-spacing: .15em;
+    background: var(--accent); color: var(--turf-dark);
+    padding: .3rem .8rem; font-size: .85rem;
+  }
+  h1 {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    line-height: .95;
+    margin: 1rem 0;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .tagline { font-size: 1.15rem; line-height: 1.6; color: var(--muted); }
+  .cta { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: .08em;
+    text-decoration: none; padding: .85rem 1.5rem; border: 2px solid var(--chalk); color: var(--chalk);
+    transition: background .15s, color .15s;
+  }
+  .btn:hover, .btn.primary { background: var(--chalk); color: var(--turf-dark); }
+
+  /* scouting card */
+  .card {
+    position: relative;
+    width: 320px; flex-shrink: 0;
+    background: var(--chalk); color: #1b1b1b;
+    border-radius: 6px;
+    box-shadow: 0 25px 50px rgba(0,0,0,.45);
+    transform: rotate(2deg);
+    transition: transform .3s;
+  }
+  .card:hover { transform: rotate(0deg) scale(1.02); }
+  .card-head { background: var(--red); color: var(--chalk); padding: .6rem 1rem; font-family: 'Oswald', sans-serif; letter-spacing: .1em; display: flex; justify-content: space-between; }
+  .photo {
+    height: 220px;
+    background: #d8d3c4 center/cover no-repeat;
+    /* Swap in your photo: background-image: url('me.jpg'); */
+    display: grid; place-items: center;
+    font-family: 'Oswald', sans-serif; font-size: 4rem; color: #9a947f;
+  }
+  .card-body { padding: 1rem; }
+  .card-body h2 { font-family: 'Oswald', sans-serif; text-transform: uppercase; font-size: 1.5rem; }
+  .pos { font-size: .8rem; color: #666; margin-bottom: .75rem; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid #1b1b1b; }
+  .stat { text-align: center; padding: .6rem 0; }
+  .stat + .stat { border-left: 1px solid #ccc; }
+  .stat b { display: block; font-family: 'Oswald', sans-serif; font-size: 1.6rem; }
+  .stat span { font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; color: #666; }
+  .scout { font-size: .8rem; font-style: italic; color: #444; border-top: 1px solid #ccc; padding-top: .6rem; margin-top: .25rem; }
+
+  @media (max-width: 860px) {
+    .hero { flex-direction: column; align-items: flex-start; padding: 3rem 16px; }
+    .card { width: 100%; max-width: 340px; transform: none; }
+  }
+</style>
+</head>
+<body>
+<section class="hero">
+  <svg class="plays" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <!-- formation -->
+    <g transform="translate(560 520)">
+      <circle class="o" cx="0" cy="0" r="14"/><circle class="o" cx="-50" cy="0" r="14"/><circle class="o" cx="50" cy="0" r="14"/>
+      <circle class="o" cx="-100" cy="0" r="14"/><circle class="o" cx="100" cy="0" r="14"/>
+      <circle class="o" cx="0" cy="70" r="14"/>
+    </g>
+    <path class="route" d="M 260 520 L 260 300 L 420 180"/>
+    <path class="route alt" d="M 900 520 L 900 360 L 760 260"/>
+    <path class="route" d="M 1040 520 L 1040 140"/>
+    <path class="route alt" d="M 560 590 C 640 600, 700 560, 720 450"/>
+    <path class="x" d="M 410 200 l 20 -20 m -20 0 l 20 20"/>
+  </svg>
+
+  <div class="copy">
+    <span class="kicker">Analyst · Builder · Fan</span>
+    <h1>Ari Eizen<br><em>reads the tape.</em></h1>
+    <p class="tagline">By day I engineer marketing data in Snowflake and Tableau. By night I build R Shiny apps that break down NFL play-calling, draft classes, and NBA lineups.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://aeizen.shinyapps.io/Draft_App/" target="_blank" rel="noopener">Try the Draft App</a>
+      <a class="btn" href="#projects">All projects</a>
+    </div>
+  </div>
+
+  <article class="card" aria-label="Scouting card">
+    <div class="card-head"><span>SCOUTING REPORT</span><span>@AriEizen</span></div>
+    <div class="photo">AE</div>
+    <div class="card-body">
+      <h2>Ari Eizen</h2>
+      <p class="pos">Marketing Analytics · New York, NY</p>
+      <div class="stats">
+        <div class="stat"><b>SQL</b><span>Snowflake</span></div>
+        <div class="stat"><b>R</b><span>Shiny · gt</span></div>
+        <div class="stat"><b>BI</b><span>Tableau</span></div>
+      </div>
+      <p class="scout">"Sees the whole field. Turns messy event data into clean reads."</p>
+    </div>
+  </article>
+</section>
+
+<script>
+  // Stagger the routes so the play "runs" one receiver at a time.
+  document.querySelectorAll('.route').forEach((r, i) => {
+    const len = r.getTotalLength();
+    r.style.strokeDasharray = len;
+    r.style.strokeDashoffset = len;
+    setTimeout(() => r.classList.add('draw'), 400 + i * 450);
+  });
+</script>
+</body>
+</html>
