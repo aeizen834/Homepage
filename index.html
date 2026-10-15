@@ -77,9 +77,9 @@
   .card:hover { transform: rotate(0deg) scale(1.02); }
   .card-head { background: var(--red); color: var(--chalk); padding: .6rem 1rem; font-family: 'Oswald', sans-serif; letter-spacing: .1em; display: flex; justify-content: space-between; }
   .photo {
-    height: 220px;
+    height: 300px;
     background: #d8d3c4 center/cover no-repeat;
-    /* Swap in your photo: background-image: url('me.jpg'); */
+    background-image: url('Ari Eizen.jpg');
     display: grid; place-items: center;
     font-family: 'Oswald', sans-serif; font-size: 4rem; color: #9a947f;
   }
@@ -120,14 +120,15 @@
     <h1>Ari Eizen<br><em>reads the tape.</em></h1>
     <p class="tagline">By day I engineer marketing data in Snowflake and Tableau. By night I build R Shiny apps that break down NFL play-calling, draft classes, and NBA lineups.</p>
     <div class="cta">
-      <a class="btn primary" href="https://aeizen.shinyapps.io/Draft_App/" target="_blank" rel="noopener">Try the Draft App</a>
+      <a class="btn primary" href="https://aeizen.shinyapps.io/Draft_App/" target="_blank" rel="noopener">Draft App</a>
+      <a class="btn primary" href="https://aeizen.shinyapps.io/nfl-play-seq/" target="_blank" rel="noopener">Play Sequencing App</a>
       <a class="btn" href="#projects">All projects</a>
     </div>
   </div>
 
   <article class="card" aria-label="Scouting card">
     <div class="card-head"><span>SCOUTING REPORT</span><span>@AriEizen</span></div>
-    <div class="photo">AE</div>
+    <div class="photo" role="img" aria-label="That's Me!"></div>
     <div class="card-body">
       <h2>Ari Eizen</h2>
       <p class="pos">Marketing Analytics · New York, NY</p>
